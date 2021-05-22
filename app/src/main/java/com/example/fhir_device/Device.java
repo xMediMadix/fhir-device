@@ -1,25 +1,25 @@
 package com.example.fhir_device;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Device {
     private Identifier[] identifier; // Instance identifier
     private String definition;  // The reference to the definition for the device
     private UdiCarrier udiCarrier; // Unique Device Identifier (UDI) Barcode string
-    private String status; // possible values: active | inactive | entered-in-error | unknown (TODO: ezt)
+    private String status; // possible values: active | inactive | entered-in-error | unknown
     private String[] statusReason; //possible values: online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
     private String distinctIdentifier; // The distinct identification string
-    private String manufacturer; // Name of device manufacturer (TODO: ezt)
-    private Date manufacturerDate; // Date when the device was made (TODO: ezt)
-    private Date expirationDate; // Date and time of expiry of this device (if applicable)
+    private String manufacturer; // Name of device manufacturer
+    private LocalDate manufacturerDate; // Date when the device was made
+    private LocalDate expirationDate; // Date and time of expiry of this device (if applicable)
     private String lotNumber; // Lot number of manufacture
-    private String serialNumber; // Serial number assigned by the manufacturer (TODO: ezt)
-    private String[] deviceName; // The name of the device as given by the manufacturer (TODO: ezt)
+    private String serialNumber; // Serial number assigned by the manufacturer
+    private String[] deviceName; // The name of the device as given by the manufacturer
     private String modelNumber; // The model number for the device
     private String partNumber; // The part number of the device
-    private CodeableConcept type; // The kind or type of device (TODO: esetleg ezt is, stringként megadva)
+    private CodeableConcept type; // The kind or type of device
     private Specialization specialization; // The capabilities supported on a device, the standards to which the device conforms for a particular purpose, and used for the communication
-    private String version; // The actual design of the device or software version running on the device (TODO: esetleg)
+    private String version; // The actual design of the device or software version running on the device
     private String property; // The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
     private String patient; // Patient to whom Device is affixed
     private String owner; // Organization responsible for device
@@ -30,13 +30,35 @@ public class Device {
     private CodeableConcept safety; // Safety Characteristics of Device
     private String parent; // The parent device
 
-    Device(String status, String manufacturer, Date manufacturerDate, String serialNumber, String deviceName, String type) {
+    /**
+     * A FHIR-Device szabvány alapján kardinalitás tekintetében nem minden mező kötelező.
+     * Ez a konstruktor csak néhány általam fontosnak vélt adatot vár, amelyek alapján inicializálja őket.
+     * Ezen paraméterek mindegyike az AddDeviceActivity-n található input mezőkről érkeznek.
+     * @param status
+     * @param manufacturer
+     * @param manufacturerDate
+     * @param serialNumber
+     * @param deviceName
+     * @param type
+     */
+    Device(String status, String manufacturer, LocalDate manufacturerDate, String serialNumber, String deviceName, String type) {
         this.status = status;
         this.manufacturer = manufacturer;
         this.manufacturerDate = manufacturerDate;
         this.serialNumber = serialNumber;
         this.deviceName = new String[]{deviceName};
         this.type = new CodeableConcept(type);
+    }
+
+    @Override
+    public String toString() {
+        return "Device{" +
+                "status='" + status + '\'' +
+                "name='" + deviceName[0] + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", manufacturerDate=" + manufacturerDate +
+                ", serialNumber='" + serialNumber + '\'' +
+                '}';
     }
 }
 
@@ -59,6 +81,10 @@ class CodeableConcept {
     CodeableConcept(String text) {
         this.text = text;
     }
+
+    public String getText() {
+        return text;
+    }
 }
 
 class Coding {
@@ -70,8 +96,8 @@ class Coding {
 }
 
 class Period {
-    private Date start;
-    private Date end;
+    private LocalDate start;
+    private LocalDate end;
 }
 
 class UdiCarrier {

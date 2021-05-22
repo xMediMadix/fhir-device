@@ -10,4 +10,17 @@
     </string>
     <string name="home_page_image_description">home_page_image</string>
     <string name="author">Madarász Máté</string>
+    <string name="add_new_device">Add New Device</string>
+    <string name="manufacturer">Name of device manufacturer</string>
+    <string name="manufacturer_date">Date when the device was made</string>
+    <string name="serial_number">Serial number assigned by the manufacturer</string>
+    <string name="device_name">The name of the device</string>
+    <string name="device_type">The kind or type of device</string>
+
+    <string-array name="statuses">
+        <item>active</item>
+        <item>inactive</item>
+        <item>entered-in-error</item>
+        <item>unknown</item>
+    </string-array>
 </resources>

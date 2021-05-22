@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="name_device" type="id"/>
+    <item name="type" type="id"/>
+    <item name="manufacturer_name" type="id"/>
+    <item name="manufacturer_date" type="id"/>
+    <item name="serial_number" type="id"/>
+    <item name="status_spinner" type="id"/>
+    <item name="view" type="id"/>
+    <item name="button2" type="id"/>
+    <item name="button3" type="id"/>
+    <item name="view2" type="id"/>
+</resources>
