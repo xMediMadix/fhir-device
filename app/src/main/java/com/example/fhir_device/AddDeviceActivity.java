@@ -2,28 +2,26 @@ package com.example.fhir_device;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String LOG_TAG = MainActivity.class.getName();
+public class AddDeviceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_device);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.nav_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.main);
-        menuItem.setIcon(R.drawable.ic_home_selected);
+        MenuItem menuItem = menu.findItem(R.id.add);
+        menuItem.setIcon(R.drawable.ic_add_selected);
         return true;
     }
 

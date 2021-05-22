@@ -9,21 +9,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class DevicesActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getName();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_devices);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.nav_menu, menu);
-        MenuItem menuItem = menu.findItem(R.id.main);
-        menuItem.setIcon(R.drawable.ic_home_selected);
+        MenuItem menuItem = menu.findItem(R.id.listing);
+        menuItem.setIcon(R.drawable.ic_list_selected);
         return true;
     }
 
