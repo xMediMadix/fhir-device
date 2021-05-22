@@ -2,9 +2,11 @@ package com.example.fhir_device;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
+
+    /**
+     * Gombra kattintás következtében megnyitásra kerül a telefonon található böngőszőn Madarász Máté github oldalja
+     * @param view
+     */
+    public void openWebsite(View view) {
+        String url = "https://github.com/xMediMadix";
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        } else {
+            Log.w(LOG_TAG, "Hiba az weboldal megnyitásakor");
+        }
     }
 
     @Override
@@ -32,21 +50,18 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
-            case R.id.main:
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                return true;
             case R.id.listing:
                 intent = new Intent(this, DevicesActivity.class);
-                startActivity(intent);
-                return true;
+                break;
             case R.id.add:
                 intent = new Intent(this, AddDeviceActivity.class);
-                startActivity(intent);
-                return true;
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        intent.putExtra("SECRET_KEY", Integer.MAX_VALUE);
+        startActivity(intent);
+        return true;
     }
 
     @Override

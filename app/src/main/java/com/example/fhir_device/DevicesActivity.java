@@ -10,11 +10,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class DevicesActivity extends AppCompatActivity {
-    private static final String LOG_TAG = MainActivity.class.getName();
+    private static final String LOG_TAG = DevicesActivity.class.getName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_devices);
+
+        int secret_key = getIntent().getIntExtra("SECRET_KEY", 0);
+        int SECRET_KEY = Integer.MAX_VALUE;
+        if (secret_key != SECRET_KEY) {
+            finish();
+        }
     }
 
     @Override
@@ -33,19 +40,16 @@ public class DevicesActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.main:
                 intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.listing:
-                intent = new Intent(this, DevicesActivity.class);
-                startActivity(intent);
-                return true;
+                break;
             case R.id.add:
                 intent = new Intent(this, AddDeviceActivity.class);
-                startActivity(intent);
-                return true;
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        intent.putExtra("SECRET_KEY", Integer.MAX_VALUE);
+        startActivity(intent);
+        return true;
     }
 
     @Override

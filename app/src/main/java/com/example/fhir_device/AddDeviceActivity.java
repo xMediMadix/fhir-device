@@ -14,6 +14,12 @@ public class AddDeviceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_device);
+
+        int secret_key = getIntent().getIntExtra("SECRET_KEY", 0);
+        int SECRET_KEY = Integer.MAX_VALUE;
+        if (secret_key != SECRET_KEY) {
+            finish();
+        }
     }
 
     @Override
@@ -32,23 +38,22 @@ public class AddDeviceActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.main:
                 intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                return true;
+                break;
             case R.id.listing:
                 intent = new Intent(this, DevicesActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.add:
-                intent = new Intent(this, AddDeviceActivity.class);
-                startActivity(intent);
-                return true;
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        intent.putExtra("SECRET_KEY", Integer.MAX_VALUE);
+        startActivity(intent);
+        return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         return super.onPrepareOptionsMenu(menu);
     }
+
+    // TODO: SharedPreferences-be eltárolni néhány bevitt adatot, amit megjegyez intent váltáskor (3.gyak ~58.perc)
 }

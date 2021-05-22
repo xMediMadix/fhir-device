@@ -9,4 +9,5 @@
         using the resource Device of the FHIR standard.
     </string>
     <string name="home_page_image_description">home_page_image</string>
+    <string name="author">Madarász Máté</string>
 </resources>
