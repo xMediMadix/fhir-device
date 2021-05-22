@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">fhir-device</string>
+    <string name="main_page">Main Page</string>
+    <string name="listing">Listing</string>
+    <string name="add">Add</string>
+    <string name="home_title">FHIR-Device</string>
+    <string name="home_description">This Compulsory program was created during the Mobile Application Frameworks course
+        (University of Szeged) in 2021. The task was to create a web application that puts CRUD operations into practice
+        using the resource Device of the FHIR standard.
+    </string>
+    <string name="home_page_image_description">home_page_image</string>
 </resources>
