@@ -8,5 +8,5 @@
         tools:context=".AddDeviceActivity"
         android:background="@color/secondary_dark"
 >
-
+<!-- TODO: Form kialakítása, spinner help: 4. gyakorlat ~11.perc -->
 </androidx.constraintlayout.widget.ConstraintLayout>
