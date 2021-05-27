@@ -60,7 +60,18 @@
             android:ems="10"
             android:id="@+id/manufacturer_name" android:gravity="center_horizontal"
             android:layout_marginTop="8dp"/>
-    <EditText
+    <Button android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:id="@+id/manufacturer_date"
+            android:onClick="openDatePicker"
+            android:text="@string/date_placeholder"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="@dimen/default_text_size"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/secondary_dark"
+            style="?android:spinnerStyle"
+    />
+<!--    <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
@@ -71,7 +82,7 @@
             android:textColor="@color/white"
             android:textAlignment="center"
             android:gravity="center_horizontal"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"/>-->
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

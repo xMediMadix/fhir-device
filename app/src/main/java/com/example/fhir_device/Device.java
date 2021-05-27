@@ -1,8 +1,10 @@
 package com.example.fhir_device;
 
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 
-public class Device {
+public class Device implements Serializable {
     private Identifier[] identifier; // Instance identifier
     private String definition;  // The reference to the definition for the device
     private UdiCarrier udiCarrier; // Unique Device Identifier (UDI) Barcode string
@@ -10,11 +12,11 @@ public class Device {
     private String[] statusReason; //possible values: online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
     private String distinctIdentifier; // The distinct identification string
     private String manufacturer; // Name of device manufacturer
-    private LocalDate manufacturerDate; // Date when the device was made
-    private LocalDate expirationDate; // Date and time of expiry of this device (if applicable)
+    private Date manufacturerDate; // Date when the device was made
+    private Date expirationDate; // Date and time of expiry of this device (if applicable)
     private String lotNumber; // Lot number of manufacture
     private String serialNumber; // Serial number assigned by the manufacturer
-    private String[] deviceName; // The name of the device as given by the manufacturer
+    private String deviceName; // The name of the device as given by the manufacturer
     private String modelNumber; // The model number for the device
     private String partNumber; // The part number of the device
     private CodeableConcept type; // The kind or type of device
@@ -41,12 +43,12 @@ public class Device {
      * @param deviceName
      * @param type
      */
-    Device(String status, String manufacturer, LocalDate manufacturerDate, String serialNumber, String deviceName, String type) {
+    Device(String status, String manufacturer, Date manufacturerDate, String serialNumber, String deviceName, String type) {
         this.status = status;
         this.manufacturer = manufacturer;
         this.manufacturerDate = manufacturerDate;
         this.serialNumber = serialNumber;
-        this.deviceName = new String[]{deviceName};
+        this.deviceName = deviceName;
         this.type = new CodeableConcept(type);
     }
 
@@ -54,7 +56,7 @@ public class Device {
     public String toString() {
         return "Device{" +
                 "status='" + status + '\'' +
-                "name='" + deviceName[0] + '\'' +
+                "name='" + deviceName + '\'' +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", manufacturerDate=" + manufacturerDate +
                 ", serialNumber='" + serialNumber + '\'' +
@@ -69,7 +71,7 @@ public class Device {
         return manufacturer;
     }
 
-    public LocalDate getManufacturerDate() {
+    public Date getManufacturerDate() {
         return manufacturerDate;
     }
 
@@ -77,7 +79,7 @@ public class Device {
         return serialNumber;
     }
 
-    public String[] getDeviceName() {
+    public String getDeviceName() {
         return deviceName;
     }
 
@@ -95,7 +97,7 @@ class Identifier {
     private String assigner;
 }
 
-class CodeableConcept {
+class CodeableConcept implements Serializable {
     private Coding[] coding;
     private String text;
 
@@ -111,7 +113,7 @@ class CodeableConcept {
     }
 }
 
-class Coding {
+class Coding implements Serializable {
     private String system;
     private String version;
     private String code;
@@ -119,12 +121,12 @@ class Coding {
     private boolean userSelected;
 }
 
-class Period {
+class Period implements Serializable {
     private LocalDate start;
     private LocalDate end;
 }
 
-class UdiCarrier {
+class UdiCarrier implements Serializable {
     private String deviceIdentifier; // Mandatory fixed portion of UDI
     private String issuer; // UDI Issuing Organization
     private String jurisdiction; // Regional UDI authority
@@ -133,7 +135,7 @@ class UdiCarrier {
     private String entryType; // possible values: barcode | rfid | manual +
 }
 
-class Specialization {
+class Specialization implements Serializable {
     private CodeableConcept systemType; // The standard that is used to operate and communicate
     private String version; // The version of the standard that is used to operate and communicate
 }

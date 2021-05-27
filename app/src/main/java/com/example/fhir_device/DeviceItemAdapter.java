@@ -83,7 +83,7 @@ public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.Vi
         }
 
         public void bindTo(Device currentItem) {
-            nameText.setText(currentItem.getDeviceName()[0]);
+            nameText.setText(currentItem.getDeviceName());
             manufacturerText.setText(currentItem.getManufacturer());
             statusText.setText(currentItem.getStatus());
             typeText.setText(currentItem.getType().getText());

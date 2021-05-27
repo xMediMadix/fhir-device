@@ -12,8 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DevicesActivity extends AppCompatActivity {
     private static final String LOG_TAG = DevicesActivity.class.getName();
@@ -21,6 +24,9 @@ public class DevicesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ArrayList<Device> itemList;
     private DeviceItemAdapter adapter;
+
+    private FirebaseFirestore firestore;
+    private CollectionReference items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,9 @@ public class DevicesActivity extends AppCompatActivity {
         adapter = new DeviceItemAdapter(this, itemList);
         recyclerView.setAdapter(adapter);
 
+        firestore = FirebaseFirestore.getInstance();
+        items = firestore.collection("devices");
+
         initializeData();
     }
 
@@ -47,7 +56,7 @@ public class DevicesActivity extends AppCompatActivity {
         // TODO: firebase lekérés
         for(int i=0;i<5;++i){
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                itemList.add(new Device("active", "ceg"+i, LocalDate.now(), "serial"+i, "name"+i, "type"+i));
+                itemList.add(new Device("active", "ceg"+i, new Date(), "serial"+i, "name"+i, "type"+i));
             }
         }
         adapter.notifyDataSetChanged();

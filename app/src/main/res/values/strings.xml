@@ -21,6 +21,7 @@
     <string name="button_submit">Submit</string>
     <string name="button_edit">Edit</string>
     <string name="button_delete">Delete</string>
+    <string name="date_placeholder">Date when the device was made</string>
 
     <string-array name="statuses">
         <item>active</item>

@@ -1,6 +1,8 @@
 package com.example.fhir_device;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -8,17 +10,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class AddDeviceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String PREF_KEY = AddDeviceActivity.class.getPackage().toString();
@@ -27,11 +31,15 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
     EditText deviceNameET;
     EditText typeET;
     EditText manufacturerNameET;
-    EditText manufacturerDateET;
+    Button manufacturerDateButton;
     EditText serialNumberET;
     Spinner statusSpinner;
     String selectedStatus;
 
+    private FirebaseFirestore firestore;
+    private CollectionReference items;
+
+    private DatePickerDialog datePickerDialog;
     private SharedPreferences preferences;
 
     @Override
@@ -44,26 +52,63 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
         if (secret_key != SECRET_KEY) {
             finish();
         }
+
+        firestore = FirebaseFirestore.getInstance();
+        items = firestore.collection("devices");
+
         getInputFields();
         fillInputFields();
+        initDatePicker();
+        manufacturerDateButton.setText("Date when the device was made");
     }
 
-    public void getInputFields(){
+    /**
+     * Új eszköz hozzáadásakor lehetőség van gyártási dátumot kiválasztani
+     * Ennek a dialógus ablaknak a megfelelő inicializálása történik ebben a metódusban
+     */
+    public void initDatePicker() {
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                String date = year + "-" + (month + 1) + "-" + dayOfMonth;
+                manufacturerDateButton.setText(date);
+            }
+        };
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        int style = AlertDialog.THEME_HOLO_DARK;
+
+        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
+    }
+
+    /**
+     * Form mezők lekérése, hogy később hivatkozni lehessen rájuk
+     */
+    public void getInputFields() {
         deviceNameET = findViewById(R.id.name_device);
         typeET = findViewById(R.id.type);
         manufacturerNameET = findViewById(R.id.manufacturer_name);
-        manufacturerDateET = findViewById(R.id.manufacturer_date);
+        manufacturerDateButton = findViewById(R.id.manufacturer_date);
         serialNumberET = findViewById(R.id.serial_number);
         statusSpinner = findViewById(R.id.status_spinner);
 
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
     }
 
-    public void fillInputFields(){
+    /**
+     * Shared Preferencies-be elmentem azokat az értékeket, amelyeket a user beírt, de nem submittolt.
+     * Így visszatérve ott folytathatja ahol abbahagyta. Ha submitra kattint akkor default értékre visszaállnak
+     * a preferencies-ben tárolt értékek
+     */
+    public void fillInputFields() {
         deviceNameET.setText(preferences.getString("name_device", ""));
         typeET.setText(preferences.getString("type", ""));
         manufacturerNameET.setText(preferences.getString("manufacturer_name", ""));
-        manufacturerDateET.setText(preferences.getString("manufacturer_date", ""));
+        manufacturerDateButton.setText(preferences.getString("manufacturer_date", ""));
         serialNumberET.setText(preferences.getString("serial_number", ""));
         statusSpinner.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -72,29 +117,69 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
         statusSpinner.setAdapter(adapter);
     }
 
-    public void backToHomePage(View view){
+    /**
+     * Form mező értékek ürítése
+     */
+    public void clearInputFields() {
+        deviceNameET.setText("");
+        typeET.setText("");
+        manufacturerNameET.setText("");
+        manufacturerDateButton.setText("");
+        serialNumberET.setText("");
+    }
+
+    /**
+     * Back gombra kattintva a kezdőlapra irányítja a metódus a felhasználót
+     * @param view
+     */
+    public void backToHomePage(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Új eszköz létrehozása a Device osztály alapján, amely a FHIR-szabvány által lett definiálva.
+     * A metódus bekéri a form-ban megadott adatokat, majd ezekből feldolgozás után egy új eszközt hoz létre,
+     * melyet FireStore adatbázisában eltárol.
+     * @param view
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void addNewDevice(View view) {
         String deviceName = deviceNameET.getText().toString();
         String type = typeET.getText().toString();
         String manufacturerName = manufacturerNameET.getText().toString();
-        String manufacturerDate = manufacturerDateET.getText().toString();
+        String manufacturerDate = manufacturerDateButton.getText().toString();
         String serialNumber = serialNumberET.getText().toString();
         try {
-            // TODO: dátum megfelelő lekezelése és átalakítása
-            Device d = new Device(selectedStatus, manufacturerName, LocalDate.of(2000, 1, 1), serialNumber, deviceName, type);
-            Log.d(LOG_TAG, d.toString());
-        } catch (Exception e){
-            Log.d(LOG_TAG, e.getMessage());
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(manufacturerDate);
+            Device d = new Device(
+                    selectedStatus,
+                    manufacturerName,
+                    date,
+                    serialNumber,
+                    deviceName,
+                    type
+            );
+            items.add(d);
+        } catch (Exception e) {
+            /**
+             * Amennyiben nincs kiválasztva a dátum ne haljon el, hanem legyen a mai dátum
+             */
+            items.add(new Device(selectedStatus, manufacturerName, new Date(), serialNumber, deviceName, type));
         }
-        // TODO: Firebase and firestore configuration
-        // TODO: Submitkor töröld a preferenceseket
+        clearInputFields();
+        Intent intent = new Intent(this, DevicesActivity.class);
+        intent.putExtra("SECRET_KEY", Integer.MAX_VALUE);
+        startActivity(intent);
     }
 
+    /**
+     * Fejlécben található menü itemek lekérése
+     * Ha ez lefut akkor azt jelenti, hogy a felhasználó az "add" menüpontra klikkelt, ekkor az ikon színét
+     * megváltoztatja cián színre
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -104,6 +189,11 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
         return true;
     }
 
+    /**
+     * Ha a user valamelyik menüpontra kattint, akkor az ahhoz tartozó Activity kerül megnyitásra
+     * @param item
+     * @return
+     */
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -139,15 +229,23 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
 
     }
 
+    /**
+     * Ez a metódus menti el a Shared Preferencies-be a formban kitöltött értékeket, hogy legközelebbi megnyitáskor
+     * ezek automatikusan megjelenjenek a usernek és folytatni tudja ott ahol abbahagyta.
+     */
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("name_device", deviceNameET.getText().toString());
         editor.putString("type", typeET.getText().toString());
         editor.putString("manufacturer_name", manufacturerNameET.getText().toString());
-        editor.putString("manufacturer_date", manufacturerDateET.getText().toString());
+        editor.putString("manufacturer_date", manufacturerDateButton.getText().toString());
         editor.putString("serial_number", serialNumberET.getText().toString());
         editor.apply();
+    }
+
+    public void openDatePicker(View view) {
+        datePickerDialog.show();
     }
 }
