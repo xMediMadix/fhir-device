@@ -100,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <Button
-                android:text="Back"
+                android:text="@string/button_back"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"
@@ -108,7 +108,7 @@
                 android:onClick="backToHomePage"
                 android:layout_height="wrap_content" android:id="@+id/button2" android:layout_weight="1"/>
         <Button
-                android:text="Submit"
+                android:text="@string/button_submit"
                 android:layout_width="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/white"

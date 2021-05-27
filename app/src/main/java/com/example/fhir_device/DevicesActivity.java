@@ -2,15 +2,25 @@ package com.example.fhir_device;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
+import java.time.LocalDate;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 
 public class DevicesActivity extends AppCompatActivity {
     private static final String LOG_TAG = DevicesActivity.class.getName();
+
+    private RecyclerView recyclerView;
+    private ArrayList<Device> itemList;
+    private DeviceItemAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +32,25 @@ public class DevicesActivity extends AppCompatActivity {
         if (secret_key != SECRET_KEY) {
             finish();
         }
+
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+        itemList = new ArrayList<>();
+
+        adapter = new DeviceItemAdapter(this, itemList);
+        recyclerView.setAdapter(adapter);
+
+        initializeData();
+    }
+
+    private void initializeData(){
+        // TODO: firebase lekérés
+        for(int i=0;i<5;++i){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                itemList.add(new Device("active", "ceg"+i, LocalDate.now(), "serial"+i, "name"+i, "type"+i));
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override

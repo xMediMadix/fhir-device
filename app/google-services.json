@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "785453180683",
+    "project_id": "fhir-device-5882f",
+    "storage_bucket": "fhir-device-5882f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785453180683:android:475aa6ca09fc8a4f12640e",
+        "android_client_info": {
+          "package_name": "com.example.fhir_device"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "785453180683-divh7h0jqcca37t5k9l0lgri2dnreqag.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fhir_device",
+            "certificate_hash": "4bd6886a30ab42e2a9b269cac57b0eb96071d879"
+          }
+        },
+        {
+          "client_id": "785453180683-shnjqdialbj5cf5flib35bd3i80t35pn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYhMzTc9ewm52SbpEXZ2CmiMvWWjEIMy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "785453180683-shnjqdialbj5cf5flib35bd3i80t35pn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

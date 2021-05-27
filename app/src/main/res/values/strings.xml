@@ -16,6 +16,11 @@
     <string name="serial_number">Serial number assigned by the manufacturer</string>
     <string name="device_name">The name of the device</string>
     <string name="device_type">The kind or type of device</string>
+    <string name="placeholder">Nev</string>
+    <string name="button_back">Back</string>
+    <string name="button_submit">Submit</string>
+    <string name="button_edit">Edit</string>
+    <string name="button_delete">Delete</string>
 
     <string-array name="statuses">
         <item>active</item>

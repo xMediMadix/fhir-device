@@ -92,6 +92,7 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
             Log.d(LOG_TAG, e.getMessage());
         }
         // TODO: Firebase and firestore configuration
+        // TODO: Submitkor töröld a preferenceseket
     }
 
     @Override

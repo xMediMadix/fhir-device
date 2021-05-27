@@ -60,6 +60,30 @@ public class Device {
                 ", serialNumber='" + serialNumber + '\'' +
                 '}';
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getManufacturer() {
+        return manufacturer;
+    }
+
+    public LocalDate getManufacturerDate() {
+        return manufacturerDate;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public String[] getDeviceName() {
+        return deviceName;
+    }
+
+    public CodeableConcept getType() {
+        return type;
+    }
 }
 
 class Identifier {

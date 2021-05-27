@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+>
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:background="@color/content_dark">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/item_name"
+                  android:padding="8dp"
+                  android:text="@string/placeholder"
+                  android:textAlignment="center"
+                  android:gravity="center"
+                  android:textColor="@color/white"
+                  android:textSize="@dimen/default_text_size"
+        />
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/primary_cyan"
+                android:layout_below="@id/item_name"
+        />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/item_manufacturer"
+                  android:padding="8dp"
+                  android:text="@string/placeholder"
+                  android:textAlignment="center"
+                  android:gravity="center"
+                  android:textColor="@color/white"
+                  android:layout_below="@id/item_name"
+        />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/item_status"
+                  android:padding="8dp"
+                  android:text="@string/placeholder"
+                  android:textAlignment="center"
+                  android:gravity="center"
+                  android:textColor="@color/white"
+                  android:layout_below="@id/item_manufacturer"
+        />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/item_type"
+                  android:padding="8dp"
+                  android:text="@string/placeholder"
+                  android:textAlignment="center"
+                  android:gravity="center"
+                  android:textColor="@color/white"
+                  android:layout_below="@id/item_status"
+        />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/item_serial_number"
+                  android:padding="8dp"
+                  android:text="@string/placeholder"
+                  android:textAlignment="center"
+                  android:gravity="center"
+                  android:textColor="@color/white"
+                  android:layout_below="@id/item_type"
+        />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/item_date"
+                  android:padding="8dp"
+                  android:text="@string/placeholder"
+                  android:textAlignment="center"
+                  android:gravity="center"
+                  android:textColor="@color/white"
+                  android:layout_below="@id/item_serial_number"
+        />
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="80dp"
+                android:paddingRight="80dp"
+                android:layout_below="@id/item_date">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_item_button" android:layout_weight="1"
+                    android:src="@drawable/ic_edit"
+                    android:background="@color/primary_cyan"
+                    android:tint="#FFF"/>
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:background="@color/primary_cyan"
+                    android:tint="#FFF"
+                    android:layout_height="wrap_content" android:id="@+id/delete_item_button"
+                    android:layout_weight="1" android:src="@drawable/ic_delete" android:layout_marginLeft="80dp"
+                    android:layout_marginStart="80dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
