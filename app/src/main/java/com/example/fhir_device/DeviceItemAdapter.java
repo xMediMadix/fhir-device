@@ -68,20 +68,6 @@ public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.Vi
             typeText = itemView.findViewById(R.id.item_type);
             serialNumberText = itemView.findViewById(R.id.item_serial_number);
             itemDateText = itemView.findViewById(R.id.item_date);
-
-            itemView.findViewById(R.id.edit_item_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO: modositas
-                }
-            });
-
-            itemView.findViewById(R.id.delete_item_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // TODO: torles
-                }
-            });
         }
 
         public void bindTo(Device currentItem) {
@@ -92,6 +78,8 @@ public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.Vi
             serialNumberText.setText(currentItem.getSerialNumber());
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             itemDateText.setText(dateFormat.format(currentItem.getManufacturerDate()));
+
+            itemView.findViewById(R.id.delete_item_button).setOnClickListener(view -> ((DevicesActivity)context).deleteDevice(currentItem));
         }
     }
 }

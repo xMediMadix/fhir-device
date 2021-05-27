@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class Device implements Serializable {
+    private String id;
     private Identifier[] identifier; // Instance identifier
     private String definition;  // The reference to the definition for the device
     private UdiCarrier udiCarrier; // Unique Device Identifier (UDI) Barcode string
@@ -53,7 +54,8 @@ public class Device implements Serializable {
         this.type = new CodeableConcept(type);
     }
 
-    public Device() {}
+    public Device() {
+    }
 
     @Override
     public String toString() {
@@ -88,6 +90,14 @@ public class Device implements Serializable {
 
     public CodeableConcept getType() {
         return type;
+    }
+
+    public String _getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
 

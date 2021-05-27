@@ -9,16 +9,14 @@ import java.time.LocalDate;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,13 +61,30 @@ public class DevicesActivity extends AppCompatActivity {
     private void initializeCards() {
         itemList.clear();
 
-        items.orderBy("deviceName").get().addOnSuccessListener(queryDocumentSnapshots -> {
+        items.orderBy("deviceName", Query.Direction.DESCENDING).get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
                 Device device = d.toObject(Device.class);
+                device.setId(d.getId());
                 itemList.add(device);
             }
             adapter.notifyDataSetChanged();
         });
+    }
+
+    public void deleteDevice(Device d) {
+        DocumentReference ref = items.document(d._getId());
+
+        ref.delete().addOnSuccessListener(success -> {
+            Toast.makeText(this, "Device " + d.getDeviceName() + " was deleted.", Toast.LENGTH_LONG).show();
+            initializeCards();
+        })
+                .addOnFailureListener(failure -> {
+                    Toast.makeText(this, "Device " + d._getId() + " cannot be deleted.", Toast.LENGTH_LONG).show();
+        });
+    }
+
+    private void updateDevice(Device d) {
+
     }
 
     @Override
