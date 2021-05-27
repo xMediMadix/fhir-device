@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+
 import java.time.LocalDate;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
@@ -12,8 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,17 +54,22 @@ public class DevicesActivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
         items = firestore.collection("devices");
 
-        initializeData();
+        initializeCards();
     }
 
-    private void initializeData(){
-        // TODO: firebase lekérés
-        for(int i=0;i<5;++i){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                itemList.add(new Device("active", "ceg"+i, new Date(), "serial"+i, "name"+i, "type"+i));
+    /**
+     * Firestoreból eszközök lekérése
+     */
+    private void initializeCards() {
+        itemList.clear();
+
+        items.orderBy("deviceName").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
+                Device device = d.toObject(Device.class);
+                itemList.add(device);
             }
-        }
-        adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
+        });
     }
 
     @Override

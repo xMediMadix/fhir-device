@@ -36,6 +36,7 @@ public class Device implements Serializable {
      * A FHIR-Device szabvány alapján kardinalitás tekintetében nem minden mező kötelező.
      * Ez a konstruktor csak néhány általam fontosnak vélt adatot vár, amelyek alapján inicializálja őket.
      * Ezen paraméterek mindegyike az AddDeviceActivity-n található input mezőkről érkeznek.
+     *
      * @param status
      * @param manufacturer
      * @param manufacturerDate
@@ -51,6 +52,8 @@ public class Device implements Serializable {
         this.deviceName = deviceName;
         this.type = new CodeableConcept(type);
     }
+
+    public Device() {}
 
     @Override
     public String toString() {

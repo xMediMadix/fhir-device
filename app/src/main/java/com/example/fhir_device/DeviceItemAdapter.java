@@ -10,15 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.ViewHolder>{
+public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.ViewHolder> {
     private ArrayList<Device> deviceItemsData;
     private ArrayList<Device> deviceItemsDataAll;
     private Context context;
     private int lastPosition = -1;
 
-    DeviceItemAdapter(Context context, ArrayList<Device> itemsData){
+    DeviceItemAdapter(Context context, ArrayList<Device> itemsData) {
         this.deviceItemsData = itemsData;
         this.deviceItemsDataAll = itemsData;
         this.context = context;
@@ -42,14 +44,14 @@ public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.Vi
 
         holder.bindTo(currentItem);
 
-        if(holder.getAdapterPosition() > lastPosition){
+        if (holder.getAdapterPosition() > lastPosition) {
             Animation anim = AnimationUtils.loadAnimation(context, R.anim.slide_in_row);
             holder.itemView.startAnimation(anim);
             lastPosition = holder.getAdapterPosition();
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView nameText;
         private TextView manufacturerText;
         private TextView statusText;
@@ -57,7 +59,7 @@ public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.Vi
         private TextView serialNumberText;
         private TextView itemDateText;
 
-        public ViewHolder(View itemView){
+        public ViewHolder(View itemView) {
             super(itemView);
 
             nameText = itemView.findViewById(R.id.item_name);
@@ -88,7 +90,8 @@ public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.Vi
             statusText.setText(currentItem.getStatus());
             typeText.setText(currentItem.getType().getText());
             serialNumberText.setText(currentItem.getSerialNumber());
-            itemDateText.setText(currentItem.getManufacturerDate().toString());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            itemDateText.setText(dateFormat.format(currentItem.getManufacturerDate()));
         }
     }
 }

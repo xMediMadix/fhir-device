@@ -130,6 +130,7 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
 
     /**
      * Back gombra kattintva a kezdőlapra irányítja a metódus a felhasználót
+     *
      * @param view
      */
     public void backToHomePage(View view) {
@@ -141,6 +142,7 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
      * Új eszköz létrehozása a Device osztály alapján, amely a FHIR-szabvány által lett definiálva.
      * A metódus bekéri a form-ban megadott adatokat, majd ezekből feldolgozás után egy új eszközt hoz létre,
      * melyet FireStore adatbázisában eltárol.
+     *
      * @param view
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -177,6 +179,7 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
      * Fejlécben található menü itemek lekérése
      * Ha ez lefut akkor azt jelenti, hogy a felhasználó az "add" menüpontra klikkelt, ekkor az ikon színét
      * megváltoztatja cián színre
+     *
      * @param menu
      * @return
      */
@@ -191,6 +194,7 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
 
     /**
      * Ha a user valamelyik menüpontra kattint, akkor az ahhoz tartozó Activity kerül megnyitásra
+     *
      * @param item
      * @return
      */

@@ -22,6 +22,8 @@
     <string name="button_edit">Edit</string>
     <string name="button_delete">Delete</string>
     <string name="date_placeholder">Date when the device was made</string>
+    <string name="add_title">Add New Device</string>
+    <string name="list_title">Listing Devices</string>
 
     <string-array name="statuses">
         <item>active</item>

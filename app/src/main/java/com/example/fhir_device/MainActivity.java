@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Gombra kattintás következtében megnyitásra kerül a telefonon található böngőszőn Madarász Máté github oldalja
+     *
      * @param view
      */
     public void openWebsite(View view) {
