@@ -83,8 +83,11 @@ public class DevicesActivity extends AppCompatActivity {
         });
     }
 
-    private void updateDevice(Device d) {
-
+    public void updateDevice(Device d) {
+        Intent intent = new Intent(this, EditDeviceActivity.class);
+        intent.putExtra("SECRET_KEY", Integer.MAX_VALUE);
+        intent.putExtra("ID", d._getId());
+        startActivity(intent);
     }
 
     @Override

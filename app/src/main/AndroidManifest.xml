@@ -9,6 +9,8 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.Fhirdevice">
+        <activity android:name=".EditDeviceActivity">
+        </activity>
         <activity android:name=".AddDeviceActivity">
         </activity>
         <activity android:name=".DevicesActivity">

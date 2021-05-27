@@ -80,6 +80,7 @@ public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.Vi
             itemDateText.setText(dateFormat.format(currentItem.getManufacturerDate()));
 
             itemView.findViewById(R.id.delete_item_button).setOnClickListener(view -> ((DevicesActivity)context).deleteDevice(currentItem));
+            itemView.findViewById(R.id.edit_item_button).setOnClickListener(view -> ((DevicesActivity)context).updateDevice(currentItem));
         }
     }
 }

@@ -24,6 +24,12 @@
     <string name="date_placeholder">Date when the device was made</string>
     <string name="add_title">Add New Device</string>
     <string name="list_title">Listing Devices</string>
+    <string name="button_update">Update</string>
+    <string name="update_title">Update Device</string>
+    <string name="device_name_label">Device Name:</string>
+    <string name="device_type_label">Device type:</string>
+    <string name="manufacturer_label">Manufacturer:</string>
+    <string name="serial_number_label">Serial number:</string>
 
     <string-array name="statuses">
         <item>active</item>
