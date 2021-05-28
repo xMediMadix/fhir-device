@@ -2,11 +2,6 @@ package com.example.fhir_device;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
-import android.util.Log;
-
-import java.time.LocalDate;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,19 +10,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.*;
-
 import java.util.ArrayList;
-import java.util.Date;
 
 public class DevicesActivity extends AppCompatActivity {
-    private static final String LOG_TAG = DevicesActivity.class.getName();
-
     private RecyclerView recyclerView;
     private ArrayList<Device> itemList;
     private DeviceItemAdapter adapter;
 
+    /**
+     * Firebase és Firestore
+     */
     private FirebaseFirestore firestore;
     private CollectionReference items;
 
@@ -71,6 +64,10 @@ public class DevicesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Eszköz törlése
+     * @param d törlendő eszköz
+     */
     public void deleteDevice(Device d) {
         DocumentReference ref = items.document(d._getId());
 
@@ -83,6 +80,11 @@ public class DevicesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Ezen metódus segítségével lehet egy eszközt kiválasztani, amelynek ID-ja átküldésre kerül egy új Intentre,
+     * ahol lehetőség van módosítani az eszköz státuszát.
+     * @param d módosítandó eszköz
+     */
     public void updateDevice(Device d) {
         Intent intent = new Intent(this, EditDeviceActivity.class);
         intent.putExtra("SECRET_KEY", Integer.MAX_VALUE);

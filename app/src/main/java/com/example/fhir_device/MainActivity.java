@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Gombra kattintás következtében megnyitásra kerül a telefonon található böngőszőn Madarász Máté github oldalja
+     * Gombra kattintás következtében megnyitásra kerül a telefonon található böngőszőn Madarász Máté github oldala
      *
      * @param view
      */

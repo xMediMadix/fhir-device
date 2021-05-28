@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class Device implements Serializable {
-    private String id;
+    private String id; // firestore id
     private Identifier[] identifier; // Instance identifier
     private String definition;  // The reference to the definition for the device
     private UdiCarrier udiCarrier; // Unique Device Identifier (UDI) Barcode string
@@ -54,6 +54,9 @@ public class Device implements Serializable {
         this.type = new CodeableConcept(type);
     }
 
+    /**
+     * Default konstruktor firestore objektum alapú inicializálásához
+     */
     public Device() {
     }
 
@@ -92,6 +95,7 @@ public class Device implements Serializable {
         return type;
     }
 
+    // Firestore nem kell tudjon róla, csak belső működéshez kell
     public String _getId() {
         return id;
     }

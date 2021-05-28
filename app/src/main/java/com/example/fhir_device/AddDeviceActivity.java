@@ -6,7 +6,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,15 +18,15 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class AddDeviceActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private static final String PREF_KEY = AddDeviceActivity.class.getPackage().toString();
-    private static final String LOG_TAG = AddDeviceActivity.class.getName();
+    private static final String PREF_KEY = AddDeviceActivity.class.getPackage().toString(); // Shared preferencies-hez
 
+    /**
+     * GUI elemek
+     */
     EditText deviceNameET;
     EditText typeET;
     EditText manufacturerNameET;
@@ -36,17 +35,25 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
     Spinner statusSpinner;
     String selectedStatus;
 
+    /**
+     * Firebase és Firestore
+     */
     private FirebaseFirestore firestore;
     private CollectionReference items;
 
-    private DatePickerDialog datePickerDialog;
-    private SharedPreferences preferences;
+    private DatePickerDialog datePickerDialog; // Dátum választó
+    private SharedPreferences preferences; // SharedPreferencies, input mezők eltárolására
+
+    private NotificationHandler notificationHandler; // Értesítés küldése új eszköz hozzáadásakor
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_device);
 
+        /**
+         * IntentExtra ellenőrzése
+         */
         int secret_key = getIntent().getIntExtra("SECRET_KEY", 0);
         int SECRET_KEY = Integer.MAX_VALUE;
         if (secret_key != SECRET_KEY) {
@@ -56,10 +63,12 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
         firestore = FirebaseFirestore.getInstance();
         items = firestore.collection("devices");
 
-        getInputFields();
-        fillInputFields();
-        initDatePicker();
+        getInputFields(); // GUI elemek lekérése
+        fillInputFields(); // Shared Preferencies-ből kapott adatokkal feltöltés
+        initDatePicker(); // Dátum dialógus ablak beállítása
         manufacturerDateButton.setText("Date when the device was made");
+        // NotificationHandler inicalizálása
+        notificationHandler = new NotificationHandler(this);
     }
 
     /**
@@ -170,6 +179,7 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
             items.add(new Device(selectedStatus, manufacturerName, new Date(), serialNumber, deviceName, type));
         }
         clearInputFields();
+        notificationHandler.send("Device " + deviceName + " was successfully added to the database.");
         Intent intent = new Intent(this, DevicesActivity.class);
         intent.putExtra("SECRET_KEY", Integer.MAX_VALUE);
         startActivity(intent);
@@ -195,7 +205,7 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
     /**
      * Ha a user valamelyik menüpontra kattint, akkor az ahhoz tartozó Activity kerül megnyitásra
      *
-     * @param item
+     * @param item: Menü elem
      * @return
      */
     @SuppressLint("NonConstantResourceId")
@@ -222,6 +232,13 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
         return super.onPrepareOptionsMenu(menu);
     }
 
+    /**
+     * Új státusz kiválasztása
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         selectedStatus = parent.getItemAtPosition(position).toString();
@@ -229,9 +246,7 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     /**
      * Ez a metódus menti el a Shared Preferencies-be a formban kitöltött értékeket, hogy legközelebbi megnyitáskor
@@ -249,6 +264,10 @@ public class AddDeviceActivity extends AppCompatActivity implements AdapterView.
         editor.apply();
     }
 
+    /**
+     * Gombra kattintva megjelenik a beállított dialógus ablak, amelyen dátumot lehet választani
+     * @param view
+     */
     public void openDatePicker(View view) {
         datePickerDialog.show();
     }

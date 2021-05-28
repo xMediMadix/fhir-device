@@ -158,7 +158,7 @@
                     android:layout_marginTop="8dp"
                     android:textColor="@color/white"
                     app:backgroundTint="@color/primary_cyan"
-                    android:onClick="backToHomePage"
+                    android:onClick="back"
                     android:layout_height="wrap_content" android:id="@+id/button2" android:layout_weight="1"/>
             <Button
                     android:text="@string/button_update"

@@ -14,15 +14,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * Kapcsolat a recyclerview és a POJO között
+ */
 public class DeviceItemAdapter extends RecyclerView.Adapter<DeviceItemAdapter.ViewHolder> {
     private ArrayList<Device> deviceItemsData;
-    private ArrayList<Device> deviceItemsDataAll;
     private Context context;
     private int lastPosition = -1;
 
     DeviceItemAdapter(Context context, ArrayList<Device> itemsData) {
         this.deviceItemsData = itemsData;
-        this.deviceItemsDataAll = itemsData;
         this.context = context;
     }
 
